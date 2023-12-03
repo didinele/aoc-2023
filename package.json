@@ -1,0 +1,63 @@
+{
+	"name": "aoc-2023",
+	"private": true,
+	"packageManager": "yarn@4.0.1",
+	"type": "module",
+	"version": "0.1.0",
+	"author": {
+		"name": "Denis Cristea",
+		"email": "didinele.dev@gmail.com"
+	},
+	"exports": {
+		"require": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		},
+		"import": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.mjs"
+		}
+	},
+	"main": "./dist/index.js",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.ts",
+	"directories": {
+		"lib": "src"
+	},
+	"files": [
+		"dist"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/didinele/aoc-2023.git"
+	},
+	"bugs": {
+		"url": "https://github.com/didinele/aoc-2023/issues"
+	},
+	"homepage": "https://github.com/didinele/aoc-2023",
+	"scripts": {
+		"build": "tsc",
+		"lint": "eslint src --ext .ts && prettier --check .",
+		"test": "vitest",
+		"format": "prettier --write .",
+		"update": "yarn upgrade-interactive",
+		"prepare": "is-ci || husky install"
+	},
+	"devDependencies": {
+		"@commitlint/cli": "^18.4.3",
+		"@commitlint/config-angular": "^18.4.3",
+		"@vitest/coverage-v8": "^0.34.6",
+		"eslint": "^8.55.0",
+		"eslint-config-neon": "^0.1.57",
+		"husky": "^8.0.3",
+		"is-ci": "^3.0.1",
+		"lint-staged": "^15.1.0",
+		"prettier": "^3.1.0",
+		"prettier-eslint": "^16.1.2",
+		"typescript": "^5.3.2",
+		"vitest": "^0.34.6"
+	},
+	"dependencies": {
+		"tslib": "^2.6.2"
+	}
+}

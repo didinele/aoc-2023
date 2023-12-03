@@ -1,0 +1,28 @@
+name: Quality Check
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    name: Quality Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 20
+
+      - name: Install deps
+        run: yarn --immutable
+
+      - name: Build the code
+        run: yarn run build
+
+      - name: Run ESLint
+        run: yarn run lint
+
+      - name: Run tests
+        run: yarn run test
