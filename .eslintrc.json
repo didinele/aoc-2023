@@ -5,7 +5,9 @@
 		"project": "./tsconfig.eslint.json"
 	},
 	"rules": {
-		"curly": ["error", "all"]
+		"curly": ["error", "all"],
+		"n/no-sync": "off",
+		"@typescript-eslint/consistent-type-definitions": ["error", "interface"]
 	},
 	"ignorePatterns": ["**/dist/*"]
 }

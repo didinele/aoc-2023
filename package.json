@@ -38,7 +38,7 @@
 	"scripts": {
 		"build": "tsc",
 		"lint": "eslint src --ext .ts && prettier --check .",
-		"test": "vitest",
+		"test": "vitest run",
 		"format": "prettier --write .",
 		"update": "yarn upgrade-interactive",
 		"prepare": "is-ci || husky install"
@@ -58,6 +58,7 @@
 		"vitest": "^0.34.6"
 	},
 	"dependencies": {
+		"@sapphire/stopwatch": "^1.5.0",
 		"tslib": "^2.6.2"
 	}
 }
