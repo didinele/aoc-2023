@@ -1,22 +1,29 @@
 import process from 'node:process';
 import { Stopwatch } from '@sapphire/stopwatch';
-import { resolveInput, resolveSolution } from './solutions/solutions.js';
+import { resolveInput, resolveSolutions } from './solutions/solutions.js';
 
-const { DAY, PART } = process.env;
+const { DAY } = process.env;
 
-if (!DAY || !PART) {
-	throw new Error('Missing DAY or PART environment variable');
+if (!DAY) {
+	throw new Error('Missing DAY environment variable');
 }
 
 const day = Number.parseInt(DAY, 10);
-const part = Number.parseInt(PART, 10);
 
-const solution = resolveSolution(day, part);
-const input = resolveInput(day, part);
+const solutions = resolveSolutions(day);
+for (let part = 0; part < 2; part++) {
+	const solution = solutions[part];
+	if (!solution) {
+		console.log('No solution implemented for part 2 yet');
+		continue;
+	}
 
-const stopwatch = new Stopwatch();
+	const input = resolveInput(day, part + 1);
 
-const result = solution(input);
-stopwatch.stop();
+	const stopwatch = new Stopwatch();
+	const result = solution(input);
 
-console.log(`Computed result: ${result.toString()}\n	Time: ${stopwatch.toString()}`);
+	stopwatch.stop();
+
+	console.log(`Computed result for part ${part + 1}: ${result.toString()}\n	Time: ${stopwatch.toString()}`);
+}
