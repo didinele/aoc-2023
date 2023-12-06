@@ -4,12 +4,12 @@ import process from 'node:process';
 import type { Solution } from '../solution';
 import { dayOnePartOne, dayOnePartTwo } from './01/01.js';
 import { dayTwoPartOne, dayTwoPartTwo } from './02/02.js';
-import { dayThreePartOne } from './03/03.js';
+import { dayThreePartOne, dayThreePartTwo } from './03/03.js';
 
 export const solutions: Record<number, [partOne: Solution, partTwo?: Solution]> = {
 	1: [dayOnePartOne, dayOnePartTwo],
 	2: [dayTwoPartOne, dayTwoPartTwo],
-	3: [dayThreePartOne],
+	3: [dayThreePartOne, dayThreePartTwo],
 };
 
 export function resolveInput(day: number, part: number): string {

@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { dayThreePartOne } from '../03/03.js';
+import { dayThreePartOne, dayThreePartTwo } from '../03/03.js';
 
 describe('Part 1', () => {
 	test('example input', () => {
@@ -19,7 +19,20 @@ describe('Part 1', () => {
 	});
 });
 
-// describe('Part 2', () => {
-// 	// test('example input', () => {
-// 	// });
-// });
+describe('Part 2', () => {
+	test('example input', () => {
+		const input = [
+			'467..114..',
+			'...*......',
+			'..35..633.',
+			'......#...',
+			'617*......',
+			'.....+.58.',
+			'..592.....',
+			'......755.',
+			'...$.*....',
+			'.664.598..',
+		].join('\n');
+		expect(dayThreePartTwo(input)).toBe(467_835);
+	});
+});
