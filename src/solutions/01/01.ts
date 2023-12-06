@@ -1,6 +1,5 @@
 import type { Solution } from '../../solution';
-
-const isDigit = (char: string): boolean => char >= '0' && char <= '9';
+import { isDigit } from '../util.js';
 
 export const dayOnePartOne: Solution = (rawInput): number =>
 	rawInput
