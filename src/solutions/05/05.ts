@@ -82,9 +82,6 @@ export const dayFivePartTwo: Solution = (rawInput): number => {
 	const firstLineBreak = rawInput.indexOf('\n');
 	const seedRanges = chunkArray(parseSeeds(rawInput.slice(0, firstLineBreak)), 2) as [number, number][];
 
-	// At this point, this is taking too long and I don't want to refactor my pretty algorithm.
-	// Time for the big guns.
-
 	const mapCollections = parseMapCollections(rawInput.slice(firstLineBreak + 2));
 
 	let min = Number.POSITIVE_INFINITY;
