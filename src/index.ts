@@ -21,7 +21,7 @@ for (let part = 0; part < 2; part++) {
 	const input = resolveInput(day, part + 1);
 
 	const stopwatch = new Stopwatch();
-	const result = solution(input);
+	const result = await solution(input);
 
 	stopwatch.stop();
 

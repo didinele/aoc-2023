@@ -1,4 +1,8 @@
-import type { Solution } from '../../solution';
+import { once } from 'node:events';
+import process from 'node:process';
+import { fileURLToPath } from 'node:url';
+import { Worker, isMainThread, workerData, parentPort } from 'node:worker_threads';
+import type { Solution } from '../../solution.js';
 import { chunkArray, range as computeRange } from '../util.js';
 
 function parseSeeds(line: string): number[] {
@@ -67,35 +71,46 @@ function parseMapCollections(rawInput: string): Map[][] {
 	);
 }
 
-export const dayFivePartOne: Solution = (rawInput): number => {
-	// Figure out where the first line ends so we can get the seeds.
-	const firstLineBreak = rawInput.indexOf('\n');
-	const seeds = parseSeeds(rawInput.slice(0, firstLineBreak));
-
-	const mapCollections = parseMapCollections(rawInput.slice(firstLineBreak + 2));
-	return Math.min(...seeds.map((seed) => resolveFinalDestination(seed, mapCollections)));
-};
-
-// Most of this was written this way due to the eager nature of JS (.map copies, `...` copies)
-// causing hard crashes. A significantly faster (12min->3min version can be found in unused_05_threaded.ts)
-export const dayFivePartTwo: Solution = (rawInput): number => {
+// This could be heavily optimized further by properly chunking the inputs. but this has been hilarious enough
+export const dayFivePartTwo: Solution = async (rawInput): Promise<number> => {
 	const firstLineBreak = rawInput.indexOf('\n');
 	const seedRanges = chunkArray(parseSeeds(rawInput.slice(0, firstLineBreak)), 2) as [number, number][];
 
-	// At this point, this is taking too long and I don't want to refactor my pretty algorithm.
-	// Time for the big guns.
+	const workers: Worker[] = Array.from(
+		{ length: seedRanges.length },
+		(_, index) =>
+			new Worker(fileURLToPath(import.meta.url), {
+				workerData: {
+					rawInput,
+					range: seedRanges[index],
+				},
+			}),
+	);
+	const responses = (await Promise.all(workers.map(async (worker) => once(worker, 'message')))) as [number][];
+	return Math.min(...responses.flat());
+};
 
-	const mapCollections = parseMapCollections(rawInput.slice(firstLineBreak + 2));
+function doWork() {
+	const {
+		rawInput,
+		range: [start, range],
+	} = workerData as { range: [number, number]; rawInput: string };
 
 	let min = Number.POSITIVE_INFINITY;
-	for (const [start, range] of seedRanges) {
-		for (const seed of computeRange({ start, end: start + range })) {
-			const computed = resolveFinalDestination(seed, mapCollections);
-			if (computed < min) {
-				min = computed;
-			}
+	// We can't send callback functions to workers, so we have to do this here.
+	const mapCollections = parseMapCollections(rawInput);
+
+	for (const seed of computeRange({ start, end: start + range })) {
+		const destination = resolveFinalDestination(seed, mapCollections);
+		if (destination < min) {
+			min = destination;
 		}
 	}
 
-	return min;
-};
+	parentPort!.postMessage(min);
+	process.exit(0);
+}
+
+if (!isMainThread && process.env.VITEST !== 'true') {
+	doWork();
+}

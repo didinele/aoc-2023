@@ -36,3 +36,19 @@ export function* range(range: RangeOptions | number): Generator<number> {
 		yield index;
 	}
 }
+
+export function chunkArray<T>(array: T[], size: number): T[][] {
+	const out: T[][] = [];
+	let pushed = 0;
+	let index = 0;
+
+	for (const element of array) {
+		(out[index] ??= []).push(element);
+		if (++pushed === size) {
+			pushed = 0;
+			index++;
+		}
+	}
+
+	return out;
+}
