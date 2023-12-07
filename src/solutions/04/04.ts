@@ -45,8 +45,8 @@ export const dayFourPartTwo: Solution = (rawInput): number => {
 			copies[cardId] += amountOfThisCard;
 		}
 
-		// If we didn't win anything we still need to add things the next card to the array, otherwise we start
-		// getting NaN'ed into infinity
+		// If we didn't win anything we still need to add the next card to the array (if it's not already there),
+		// otherwise we start getting NaN'ed into infinity
 		if (won === 0 && line !== lines.length - 1) {
 			copies[line + 1] ??= 0;
 		}

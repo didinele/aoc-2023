@@ -12,3 +12,27 @@ export function dedupeNonPrimitiveArray<T, TIdentifier extends number | string>(
 
 	return [...map.values()];
 }
+
+interface RangeOptions {
+	end: number;
+	start: number;
+	step?: number;
+}
+
+export function* range(range: RangeOptions | number): Generator<number> {
+	let rangeEnd: number;
+	let start = 0;
+	let step = 1;
+
+	if (typeof range === 'number') {
+		rangeEnd = range;
+	} else {
+		start = range.start;
+		rangeEnd = range.end;
+		step = range.step ?? 1;
+	}
+
+	for (let index = start; index < rangeEnd; index += step) {
+		yield index;
+	}
+}

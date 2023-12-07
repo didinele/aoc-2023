@@ -6,6 +6,7 @@ import { dayOnePartOne, dayOnePartTwo } from './01/01.js';
 import { dayTwoPartOne, dayTwoPartTwo } from './02/02.js';
 import { dayThreePartOne, dayThreePartTwo } from './03/03.js';
 import { dayFourPartOne, dayFourPartTwo } from './04/04.js';
+import { dayFivePartOne, dayFivePartTwo } from './05/05.js';
 
 type SolutionPair = [partOne: Solution, partTwo?: Solution];
 
@@ -14,6 +15,7 @@ export const solutions: Record<number, SolutionPair> = {
 	2: [dayTwoPartOne, dayTwoPartTwo],
 	3: [dayThreePartOne, dayThreePartTwo],
 	4: [dayFourPartOne, dayFourPartTwo],
+	5: [dayFivePartOne, dayFivePartTwo],
 };
 
 export function resolveInput(day: number, part: number): string {
